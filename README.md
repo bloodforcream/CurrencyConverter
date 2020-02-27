@@ -1,5 +1,7 @@
-• Переименовать файл "config.example.json" на "config.json"
-• Вставить app_id в "app_id"
+• Переименовать файл "config.example.json" в "config.json"
 
-Описание API
-GET api/convert/?convert_from=<CURRENCY>&convert_into=<CURRENCY>&amount=<number>
+• Вставить app_id в поле "app_id"
+
+# **Описание API**
+
+__GET api/convert/?convert_from="CURRENCY"&convert_into="CURRENCY"&amount="number"__
