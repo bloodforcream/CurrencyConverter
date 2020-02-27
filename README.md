@@ -1,6 +1,6 @@
 • Переименовать файл "config.example.json" в "config.json"
 
-• Вставить app_id в поле "app_id"
+• Вставить действительный app_id в поле "app_id"
 
 # **Описание API**
 
