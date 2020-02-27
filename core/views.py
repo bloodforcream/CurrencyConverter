@@ -2,11 +2,10 @@ from django.shortcuts import render
 
 from core.forms import ConvertCurrencyForm
 from core.serializers import CurrencyConverterSerializers
-from currencyconverter.settings import CURRENCY_LIST, APP_ID
-
+from currencyconverter.settings import CURRENCY_LIST
+from core.converter import convert
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-import requests
 
 
 def home(request):
@@ -34,24 +33,8 @@ class ConvertCurrency(viewsets.ViewSet):
         if serializer.is_valid():
             data = serializer.validated_data
             response = convert(data['convert_from'], data['convert_into'], data['amount'])
-            return Response({"amount": response}, status=status.HTTP_200_OK)
-        return Response({"Error": 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
-
-def convert(convert_from, convert_into, amount):
-    convert_from = convert_from.upper()
-    convert_into = convert_into.upper()
-    if convert_from != convert_into:
-        rates = get_rates()
-        if convert_from and convert_into in rates:
-            response = round(rates[convert_into] / rates[convert_from] * amount, 6)
-            return response
-    return 'Invalid data'
-
-
-def get_rates():
-    api_request = "https://openexchangerates.org/api/latest.json?app_id=" + APP_ID + "&symbols=" + ','.join(
-        CURRENCY_LIST)
-    api_request = requests.get(api_request)
-    response_rates = api_request.json()['rates']
-    return response_rates
+            if response != 'Unsupported currency':
+                return Response({"amount": response}, status=status.HTTP_200_OK)
+            else:
+                return Response({"Error": response}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"Error": 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
