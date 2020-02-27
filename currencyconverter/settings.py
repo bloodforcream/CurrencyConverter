@@ -124,5 +124,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CURRENCY_LIST = config["currency"]
+CURRENCY_LIST = config["supported_currencies"]
 APP_ID = config["app_id"]

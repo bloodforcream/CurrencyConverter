@@ -1,0 +1,4 @@
+{
+  "supported_currencies": ["USD", "EUR", "PLN", "CZK"],
+  "app_id": "app_id"
+}
